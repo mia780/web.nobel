@@ -5,10 +5,10 @@ document.getElementById("menu").innerHTML=`
   
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="#">Nobel díj</a>
+        <a class="nav-link" href="index.html">Nobel díj</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link 2</a>
+        <a class="nav-link" href="evkeres.html">Évkeres</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Link 3</a>
