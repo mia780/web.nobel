@@ -1,22 +1,24 @@
+let tomb=[]
 fetch("https://api.nobelprize.org/v1/prize.json")
 .then(x=>x.json())
 .then(y=>megjelenit(y))
 
 function megjelenit(y){
+    tomb=y
     console.log(y)
     let sz=""
     let sorszam=0
     for (const elem of y.prizes) {
         sz+=`
-        <div>
-        <div class="col-sm-3>
-         </div>
-         <di class="szegely data-bs-toggle="modal" data-bs-target="#myModal onclick="reszletkiir(${sorszam}})">
+       
+        <div class="col-sm-3">
+        
+        <div class="szegely" data-bs-toggle="modal" data-bs-target="#myModal" onclick="reszletkiir(${sorszam})">
         <p>${elem.year}</p>
         <p>${elem.category}</p>
         </div>
         </div>
-        <!-- Button to Open the Modal -->
+       
         `
         sorszam++
     }
@@ -25,8 +27,16 @@ function megjelenit(y){
 
 
 }
+
+
+
 function reszletkiir(sorszam){
     console.log(sorszam)
+    //alert(JSON.stringify(tomb)) 
+    //console.log(tomb)
+    document.getElementById("modalfej").innerHTML=tomb.prizes[sorszam].year+" "+tomb.prizes[sorszam].category
+
+
 }
 
 
