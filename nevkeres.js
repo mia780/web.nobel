@@ -1,23 +1,40 @@
-function keresesNev(){
-    let benev=document.getElementById("belNev").value
+function keresesNev() {
+    let benev = document.getElementById("belNev").value;
     fetch("https://api.nobelprize.org/v1/prize.json")
-    .then(x => x.json())
-    .then(y =>nevMegjelenit(y,benev) )
-
-
-
+        .then(response => response.json())
+        .then(data => nevMegjelenit(data, benev));
 }
-function nevmegjelenit(benev){
-    for (const elem of y.prizes) {
-        for (const alelem of elem.laureates) {
-            if (elem.laureates!=undefined)
-            if (elem.firstname==benev){
-                console.log(alelem.firstname)
+
+function nevMegjelenit(data, benev) {
+    let sz = `<table>
+    <thead>
+      <tr>
+        <th>Év</th>
+        <th>Kategória</th>
+        <th>Keresztnév</th>
+        <th>Vezetéknév</th>
+        <th>Indoklás</th>
+      </tr>
+    </thead>
+    <tbody>`;
+
+    for (const elem of data.prizes) {
+        if (elem.laureates !== undefined) {
+            for (const alelem of elem.laureates) {
+                if (alelem.firstname && alelem.firstname.toLowerCase() === benev.toLowerCase()) {
+                    sz += `
+                    <tr>
+                        <td>${elem.year}</td>
+                        <td>${elem.category}</td>
+                        <td>${alelem.firstname}</td>
+                        <td>${alelem.surname}</td>
+                        <td>${alelem.motivation}</td>
+                    </tr>`;
+                }
             }
-            
         }
-        else
-    console.log(elem.year+" "+elem.category)
     }
 
+    sz += `</tbody></table>`;
+    document.getElementById("eredmeny").innerHTML = sz;
 }
