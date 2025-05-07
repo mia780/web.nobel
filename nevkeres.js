@@ -1,40 +1,94 @@
-function keresesNev() {
-    let benev = document.getElementById("belNev").value;
+Nobel-díjak
+Anikó Várbíróné Nahaji
+•
+ápr. 14. (Szerkesztve: 11:40)
+100 pont
+https://api.nobelprize.org/v1/prize.json
+nobel.jpg
+Kép
+alap.js
+JavaScript
+evkeres.html
+HTML
+evkeres.js
+JavaScript
+index.html
+HTML
+menu.js
+JavaScript
+nevkeres.html
+HTML
+nevkeres.js
+JavaScript
+stilus.css
+CSS
+Kurzusmegjegyzések
+Saját feladat
+Leadva
+GitHub - mia780/web.nobel
+https://github.com/mia780/web.nobel.git
+Privát megjegyzések
+
+function keresesNev(){
+    let beNev=document.getElementById("beNev").value 
     fetch("https://api.nobelprize.org/v1/prize.json")
-        .then(response => response.json())
-        .then(data => nevMegjelenit(data, benev));
+    .then(x=>x.json())
+    .then(y=>nevMegjelenit(y,beNev))
 }
 
-function nevMegjelenit(data, benev) {
-    let sz = `<table>
+function nevMegjelenit(y,beNev){
+    let sz=`
+     <table class="table table-striped">
     <thead>
       <tr>
-        <th>Év</th>
-        <th>Kategória</th>
+        <th>Év,Kategória</th>
         <th>Keresztnév</th>
         <th>Vezetéknév</th>
-        <th>Indoklás</th>
+        <th>Indok</th>
       </tr>
     </thead>
-    <tbody>`;
-
-    for (const elem of data.prizes) {
-        if (elem.laureates !== undefined) {
-            for (const alelem of elem.laureates) {
-                if (alelem.firstname && alelem.firstname.toLowerCase() === benev.toLowerCase()) {
-                    sz += `
+    <tbody>
+      
+   
+  `
+    for (const elem of y.prizes) {
+        if (elem.laureates!=undefined)
+            for (const alElem of elem.laureates) {
+                
+                if (alElem.firstname.toLowerCase().includes(beNev.toLowerCase()) || alElem.motivation.toLowerCase().includes(beNev.toLowerCase())  ){
+                    console.log(alElem.firstname)
+                    sz+=`
                     <tr>
-                        <td>${elem.year}</td>
-                        <td>${elem.category}</td>
-                        <td>${alelem.firstname}</td>
-                        <td>${alelem.surname}</td>
-                        <td>${alelem.motivation}</td>
-                    </tr>`;
+                    <td>${elem.year} ${elem.category}</td>
+                    <td>${alElem.firstname}</td>
+                    <td>${alElem.surname}</td>
+                    <td>${alElem.motivation}</td>
+                    </tr>
+                    `
                 }
-            }
+                // -------------------surname vizsgálata külön---------------------
+                if (alElem.surname!=undefined && alElem.surname.toLowerCase().includes(beNev.toLowerCase())  ){
+                    console.log(alElem.firstname)
+                    sz+=`
+                    <tr>
+                    <td>${elem.year} ${elem.category}</td>
+                    <td>${alElem.firstname}</td>
+                    <td>${alElem.surname}</td>
+                    <td>${alElem.motivation}</td>
+                    </tr>
+                    `
+                }
+
         }
+        else 
+            console.log(elem.year+" "+elem.category)
+
     }
 
-    sz += `</tbody></table>`;
-    document.getElementById("eredmeny").innerHTML = sz;
+
+    sz+=` </tbody>
+  </table>`
+  document.getElementById("tablazat").innerHTML=sz
 }
+
+
