@@ -1,3 +1,34 @@
+Nobel-díjak
+Anikó Várbíróné Nahaji
+•
+ápr. 14. (Szerkesztve: 11:40)
+100 pont
+https://api.nobelprize.org/v1/prize.json
+nobel.jpg
+Kép
+alap.js
+JavaScript
+evkeres.html
+HTML
+evkeres.js
+JavaScript
+index.html
+HTML
+menu.js
+JavaScript
+nevkeres.html
+HTML
+nevkeres.js
+JavaScript
+stilus.css
+CSS
+Kurzusmegjegyzések
+Saját feladat
+Leadva
+GitHub - mia780/web.nobel
+https://github.com/mia780/web.nobel.git
+Privát megjegyzések
+
 let tomb=[]
 fetch("https://api.nobelprize.org/v1/prize.json")
 .then(x=>x.json())
@@ -10,33 +41,38 @@ function megjelenit(y){
     let sorszam=0
     for (const elem of y.prizes) {
         sz+=`
-       
         <div class="col-sm-3">
-        
-        <div class="szegely" data-bs-toggle="modal" data-bs-target="#myModal" onclick="reszletkiir(${sorszam})">
-        <p>${elem.year}</p>
-        <p>${elem.category}</p>
+            <div class="szegely" data-bs-toggle="modal" data-bs-target="#myModal" onclick="reszletKiir(${sorszam})" >
+                <p>${elem.year}</p>
+                <p>${elem.category}</p>
+            </div>
         </div>
-        </div>
-       
+
         `
         sorszam++
     }
-
     document.getElementById("keret").innerHTML=sz
 
-
 }
 
-
-
-function reszletkiir(sorszam){
+function reszletKiir(sorszam){
     console.log(sorszam)
-    //alert(JSON.stringify(tomb)) 
+    //alert(JSON.stringify(tomb))
     //console.log(tomb)
-    document.getElementById("modalfej").innerHTML=tomb.prizes[sorszam].year+" "+tomb.prizes[sorszam].category
-
-
+    document.getElementById("modalFej").innerHTML=tomb.prizes[sorszam].year+" "+tomb.prizes[sorszam].category
+    let sz=`<ol>`
+    for (const elem of tomb.prizes[sorszam].laureates) {
+        sz+=`
+            <li>
+            <p>${elem.firstname} ${elem.surname}
+            </p>
+            <p>
+            ${elem.motivation}
+            </p>
+            </li>
+        `
+    } 
+    sz+=`</ol>`
+    document.getElementById("modalTorzs").innerHTML=sz
 }
-
 
